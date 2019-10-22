@@ -24,6 +24,7 @@ export TZ={{ timezone }}
 exec bin/tidb-server \
     -P {{ tidb_port }} \
     --status="{{ tidb_status_port }}" \
+    --prometheus-addr="{{ prometheus_host }}:{{ prometheus_port }}" \
     --advertise-address="{{ my_ip }}" \
     --path="{{ all_pd | join(',') }}" \
     --config=conf/tidb.toml \
