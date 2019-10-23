@@ -11,6 +11,10 @@ cd "${DEPLOY_DIR}" || exit 1
 
 {% set my_ip = hostvars[inventory_hostname].ansible_host | default(hostvars[inventory_hostname].inventory_hostname) -%}
 
+{% set prometheus_host = hostvars[groups.monitoring_servers[0]].ansible_host | default(hostvars[groups.monitoring_servers[0]].inventory_hostname)
+    if groups.get('monitoring_servers', []) else '' -%}
+{% set prometheus_port = hostvars[groups.monitoring_servers[0]].prometheus_port if prometheus_host else '' -%}
+
 {% set all_pd = [] -%}
 {% set pd_hosts = groups.pd_servers %}
 {% for host in pd_hosts -%}
